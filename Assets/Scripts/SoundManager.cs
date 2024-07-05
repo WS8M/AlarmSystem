@@ -11,7 +11,7 @@ public class SoundManager : MonoBehaviour
 
     private float _targetVolume;
 
-    private Action ChangedVolumeToZero;
+    private event Action ChangedVolumeToZero;
     
     private void Awake()
     {
@@ -19,6 +19,11 @@ public class SoundManager : MonoBehaviour
         _targetVolume = _audioSource.volume;
 
         ChangedVolumeToZero += StopPlayed;
+    }
+
+    private void OnDisable()
+    {
+        ChangedVolumeToZero -= StopPlayed;
     }
 
     public void SoundOn()
